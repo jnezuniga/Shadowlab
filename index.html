@@ -1,0 +1,1091 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ShadowLab — Inglés americano: oído y voz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E1822; --surface:#16242F; --surface2:#1E303C; --surface3:#27404E;
+  --line:#2C4351; --line2:#3A5666;
+  --ink:#EAF1F4; --ink2:#9CB2BE; --ink3:#6B8694;
+  --amber:#F4A259; --amber-d:#D9863B;
+  --mint:#5FD0A8; --mint-d:#3FA886;
+  --coral:#F26D5B; --coral-d:#D2503F;
+  --blue:#5B9BD5;
+  --r:14px; --r-sm:9px;
+  --shadow:0 8px 30px rgba(0,0,0,.35);
+  --display:'Space Grotesk',system-ui,sans-serif;
+  --body:'IBM Plex Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--body);
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  padding-bottom:84px;
+}
+h1,h2,h3,h4{font-family:var(--display); font-weight:600; line-height:1.15; margin:0}
+.mono{font-family:var(--mono)}
+button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit}
+a{color:var(--amber)}
+:focus-visible{outline:2px solid var(--amber); outline-offset:2px; border-radius:6px}
+::selection{background:var(--amber); color:#1a1206}
+
+/* ---------- shell ---------- */
+.wrap{max-width:780px; margin:0 auto; padding:0 16px}
+header.top{
+  position:sticky; top:0; z-index:40; background:rgba(14,24,34,.86);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--line);
+}
+.top-in{max-width:780px; margin:0 auto; padding:13px 16px; display:flex; align-items:center; gap:12px}
+.logo{display:flex; align-items:center; gap:10px}
+.logo .glyph{
+  font-family:var(--mono); font-weight:600; font-size:19px; color:var(--bg);
+  background:var(--amber); width:34px; height:34px; border-radius:9px;
+  display:grid; place-items:center; box-shadow:0 0 0 1px var(--amber-d) inset;
+}
+.logo .name{font-family:var(--display); font-weight:700; font-size:18px; letter-spacing:-.01em}
+.logo .name span{color:var(--amber)}
+.top .phase-chip{margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--ink2);
+  border:1px solid var(--line2); padding:5px 9px; border-radius:20px; white-space:nowrap}
+.top .phase-chip b{color:var(--mint)}
+
+/* ---------- nav ---------- */
+nav.tabs{
+  position:fixed; bottom:0; left:0; right:0; z-index:45;
+  background:rgba(18,29,39,.95); backdrop-filter:blur(14px);
+  border-top:1px solid var(--line); display:flex; justify-content:center;
+  padding:8px 6px calc(8px + env(safe-area-inset-bottom));
+}
+nav.tabs .row{display:flex; gap:2px; max-width:780px; width:100%; justify-content:space-between}
+nav.tabs button{
+  flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;
+  padding:6px 2px; border-radius:10px; color:var(--ink3);
+  font-size:10.5px; font-weight:500; letter-spacing:.01em; transition:color .15s, background .15s;
+}
+nav.tabs button .ic{font-size:18px; line-height:1}
+nav.tabs button.on{color:var(--amber)}
+nav.tabs button.on .ic{filter:drop-shadow(0 0 6px rgba(244,162,89,.5))}
+nav.tabs button:hover{color:var(--ink)}
+
+/* ---------- sections ---------- */
+main{padding:20px 0 8px}
+section.view{display:none; animation:fade .35s ease}
+section.view.active{display:block}
+@keyframes fade{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
+.eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink3); margin-bottom:7px}
+.view > h2.vtitle{font-size:25px; letter-spacing:-.02em; margin-bottom:4px}
+.view > p.lede{color:var(--ink2); margin:0 0 20px; max-width:60ch}
+
+/* ---------- cards ---------- */
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:18px; margin-bottom:14px}
+.card.pad-lg{padding:22px}
+.card h3{font-size:17px; margin-bottom:4px}
+.card .sub{color:var(--ink2); font-size:13.5px; margin:0 0 14px}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+
+/* ---------- hero (today) ---------- */
+.hero{
+  background:linear-gradient(135deg,#1B2D3A 0%,#16242F 70%);
+  border:1px solid var(--line2); border-radius:18px; padding:22px; margin-bottom:16px; position:relative; overflow:hidden;
+}
+.hero .wave{position:absolute; inset:auto 0 -2px 0; height:48px; opacity:.5; pointer-events:none}
+.hero .greet{font-family:var(--mono); font-size:12px; color:var(--ink2); letter-spacing:.04em}
+.hero .streak{display:flex; align-items:baseline; gap:9px; margin:6px 0 16px}
+.hero .streak .num{font-family:var(--display); font-weight:700; font-size:44px; color:var(--amber); line-height:1}
+.hero .streak .lab{color:var(--ink2); font-size:13px}
+.phrase-of-day{border-top:1px dashed var(--line2); padding-top:14px}
+.phrase-of-day .tag{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink3); margin-bottom:8px}
+.phrase-of-day .written{font-family:var(--display); font-size:19px; font-weight:500; color:var(--ink)}
+.phrase-of-day .arrow{color:var(--ink3); font-family:var(--mono); margin:4px 0; font-size:13px}
+.phrase-of-day .reduced{font-family:var(--mono); font-size:18px; color:var(--amber); font-weight:500}
+.phrase-of-day button.say{margin-top:12px}
+
+/* ---------- progress ring + bars ---------- */
+.plan-progress{display:flex; align-items:center; gap:16px}
+.ring{flex:0 0 auto}
+.metric-row{display:flex; align-items:center; gap:10px; margin:9px 0}
+.metric-row .ml{width:130px; font-size:13px; color:var(--ink2)}
+.bar{flex:1; height:7px; background:var(--surface3); border-radius:6px; overflow:hidden}
+.bar i{display:block; height:100%; border-radius:6px; background:linear-gradient(90deg,var(--amber),var(--mint))}
+.metric-row .mv{font-family:var(--mono); font-size:12px; color:var(--ink2); width:46px; text-align:right}
+
+/* ---------- block list (today session) ---------- */
+.block{display:flex; gap:14px; padding:15px; border:1px solid var(--line); border-radius:var(--r); margin-bottom:11px; background:var(--surface); transition:border-color .15s}
+.block.done{opacity:.6}
+.block.done .b-name{text-decoration:line-through}
+.block .b-num{font-family:var(--mono); font-size:13px; color:var(--bg); background:var(--mint); width:26px; height:26px; border-radius:7px; display:grid; place-items:center; flex:0 0 auto; font-weight:600}
+.block .b-body{flex:1; min-width:0}
+.block .b-name{font-family:var(--display); font-weight:600; font-size:15.5px}
+.block .b-meta{font-size:12.5px; color:var(--ink3); font-family:var(--mono); margin:1px 0 6px}
+.block .b-desc{font-size:13.5px; color:var(--ink2)}
+.block .b-foot{display:flex; gap:8px; margin-top:10px; flex-wrap:wrap}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex; align-items:center; gap:7px; padding:9px 15px; border-radius:10px; font-weight:600; font-size:13.5px; transition:transform .08s, filter .15s, background .15s; border:1px solid transparent}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--amber); color:#1a1206}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.mint{background:var(--mint); color:#06231a}
+.btn.ghost{background:transparent; border-color:var(--line2); color:var(--ink)}
+.btn.ghost:hover{background:var(--surface2)}
+.btn.sm{padding:6px 11px; font-size:12.5px; border-radius:8px}
+.btn.full{width:100%; justify-content:center}
+.btn:disabled{opacity:.5; cursor:not-allowed}
+.btn .sp{width:14px; height:14px; border:2px solid currentColor; border-right-color:transparent; border-radius:50%; animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- timer ---------- */
+.timer-wrap{text-align:center; padding:6px 0}
+.timer-clock{font-family:var(--mono); font-size:52px; font-weight:600; letter-spacing:.02em; color:var(--ink)}
+.timer-clock.run{color:var(--amber)}
+.timer-label{font-family:var(--mono); font-size:12px; color:var(--ink3); text-transform:uppercase; letter-spacing:.1em; margin-bottom:4px}
+.timer-ctrls{display:flex; gap:9px; justify-content:center; margin-top:14px}
+
+/* ---------- phase / roadmap ---------- */
+.phase{position:relative; padding:0 0 4px 26px; margin-bottom:6px}
+.phase::before{content:''; position:absolute; left:7px; top:24px; bottom:-6px; width:2px; background:var(--line2)}
+.phase:last-child::before{display:none}
+.phase .dot{position:absolute; left:0; top:4px; width:16px; height:16px; border-radius:50%; background:var(--surface); border:2px solid var(--line2)}
+.phase.cur .dot{background:var(--amber); border-color:var(--amber); box-shadow:0 0 0 4px rgba(244,162,89,.18)}
+.phase.cur > .ph-head .ph-name{color:var(--amber)}
+.phase.done .dot{background:var(--mint); border-color:var(--mint)}
+.ph-head{display:flex; align-items:baseline; gap:10px; cursor:pointer}
+.ph-head .ph-when{font-family:var(--mono); font-size:11.5px; color:var(--ink3)}
+.ph-head .ph-name{font-family:var(--display); font-weight:600; font-size:16px}
+.ph-body{margin-top:8px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:15px; display:none}
+.phase.open .ph-body{display:block}
+.ph-body .goal{font-size:13.5px; color:var(--ink2); margin:0 0 11px}
+.ph-body .focus{display:flex; gap:6px; margin-bottom:12px; flex-wrap:wrap}
+.chip{font-family:var(--mono); font-size:11px; padding:3px 9px; border-radius:20px; border:1px solid var(--line2); color:var(--ink2)}
+.chip.am{border-color:var(--amber-d); color:var(--amber)}
+.chip.mi{border-color:var(--mint-d); color:var(--mint)}
+.ph-body ul{margin:0; padding-left:18px; font-size:13.5px; color:var(--ink2)}
+.ph-body ul li{margin:4px 0}
+.ph-body .gate{margin-top:11px; padding:10px 12px; background:var(--surface2); border-left:3px solid var(--amber); border-radius:0 8px 8px 0; font-size:13px}
+.ph-body .gate b{color:var(--amber); font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; display:block; margin-bottom:2px}
+
+/* ---------- phonetics ---------- */
+.sound-week{background:linear-gradient(135deg,#2A2018,#16242F); border:1px solid var(--amber-d)}
+.sound-week .big{font-family:var(--mono); font-size:40px; color:var(--amber); font-weight:600}
+.reduce-grid{display:grid; grid-template-columns:1fr 1fr; gap:9px}
+@media(max-width:560px){.reduce-grid{grid-template-columns:1fr}}
+.rd{background:var(--surface2); border:1px solid var(--line); border-radius:10px; padding:11px 13px; display:flex; align-items:center; gap:10px}
+.rd .from{font-family:var(--display); font-size:14px; color:var(--ink2)}
+.rd .to{font-family:var(--mono); font-size:15px; color:var(--amber); font-weight:500}
+.rd .ar{color:var(--ink3); font-size:12px}
+.rd button{margin-left:auto; color:var(--ink3); font-size:17px}
+.rd button:hover{color:var(--amber)}
+.ipa-list{display:flex; flex-direction:column; gap:8px}
+.ipa-row{display:flex; gap:12px; align-items:baseline; padding:9px 0; border-bottom:1px solid var(--line)}
+.ipa-row:last-child{border:none}
+.ipa-row .sym{font-family:var(--mono); font-size:20px; color:var(--amber); width:42px; flex:0 0 auto}
+.ipa-row .ex{font-size:13.5px; color:var(--ink2)}
+.ipa-row .ex b{color:var(--ink)}
+
+/* ---------- practice tools ---------- */
+.tool-tabs{display:flex; gap:6px; margin-bottom:16px; overflow-x:auto; padding-bottom:4px; -webkit-overflow-scrolling:touch}
+.tool-tabs button{flex:0 0 auto; padding:8px 13px; border-radius:9px; font-size:13px; font-weight:500; color:var(--ink2); border:1px solid var(--line); background:var(--surface); white-space:nowrap}
+.tool-tabs button.on{background:var(--amber); color:#1a1206; border-color:var(--amber); font-weight:600}
+.tool-pane{display:none}
+.tool-pane.on{display:block}
+.field{margin-bottom:12px}
+.field label{display:block; font-size:12.5px; color:var(--ink2); margin-bottom:5px; font-weight:500}
+select,input[type=text],textarea{width:100%; background:var(--surface2); border:1px solid var(--line2); color:var(--ink); border-radius:9px; padding:10px 12px; font-family:var(--body); font-size:14px}
+textarea{resize:vertical; min-height:74px; line-height:1.5}
+select:focus,input:focus,textarea:focus{border-color:var(--amber); outline:none}
+.seg{display:flex; gap:6px; flex-wrap:wrap}
+.seg button{padding:7px 12px; border-radius:8px; border:1px solid var(--line2); color:var(--ink2); font-size:12.5px; background:var(--surface2)}
+.seg button.on{background:var(--surface3); color:var(--ink); border-color:var(--amber)}
+
+/* dictation items */
+.dict-item{background:var(--surface2); border:1px solid var(--line); border-radius:11px; padding:13px; margin-bottom:11px}
+.dict-item .dtop{display:flex; align-items:center; gap:8px; margin-bottom:9px}
+.dict-item .didx{font-family:var(--mono); font-size:12px; color:var(--ink3)}
+.dict-item textarea{min-height:48px; margin-bottom:8px}
+.dict-reveal{display:none; border-top:1px dashed var(--line2); padding-top:10px; margin-top:4px}
+.dict-item.shown .dict-reveal{display:block}
+.dict-reveal .lbl{font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3); margin:6px 0 2px}
+.dict-reveal .corr{font-size:15px; color:var(--ink)}
+.dict-reveal .corr .hl{color:var(--coral); font-weight:600; text-decoration:underline; text-decoration-style:wavy; text-decoration-color:var(--coral)}
+.dict-reveal .red{font-family:var(--mono); color:var(--amber); font-size:14px}
+
+/* chat / roleplay */
+.chat{display:flex; flex-direction:column; gap:10px; max-height:46vh; overflow-y:auto; padding:4px 2px 8px; margin-bottom:12px}
+.msg{max-width:84%; padding:10px 13px; border-radius:13px; font-size:14px; line-height:1.5}
+.msg.them{background:var(--surface2); border:1px solid var(--line); align-self:flex-start; border-bottom-left-radius:4px}
+.msg.me{background:var(--amber); color:#1a1206; align-self:flex-end; border-bottom-right-radius:4px}
+.msg.them button.replay{margin-left:6px; color:var(--ink3); font-size:14px}
+.chat-in{display:flex; gap:8px; align-items:flex-end}
+.chat-in textarea{min-height:44px}
+.mic{flex:0 0 auto; width:44px; height:44px; border-radius:11px; background:var(--surface2); border:1px solid var(--line2); display:grid; place-items:center; font-size:19px}
+.mic.rec{background:var(--coral); border-color:var(--coral); animation:pulse 1.1s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(242,109,91,.5)}50%{box-shadow:0 0 0 7px rgba(242,109,91,0)}}
+
+/* fallback prompt box */
+.fallback{background:var(--surface2); border:1px dashed var(--amber-d); border-radius:11px; padding:14px; margin-top:12px}
+.fallback .fh{font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--amber); margin-bottom:7px}
+.fallback pre{white-space:pre-wrap; font-family:var(--mono); font-size:12.5px; color:var(--ink2); background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:11px; margin:0 0 10px; max-height:220px; overflow:auto}
+
+/* resources */
+.res-group{margin-bottom:8px}
+.res-group > h3{display:flex; align-items:center; gap:8px; font-size:15px; margin-bottom:2px}
+.res-group > .gd{font-size:12.5px; color:var(--ink3); margin:0 0 11px}
+.res{display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--line)}
+.res:last-child{border:none}
+.res .ri{font-family:var(--mono); font-size:11px; color:var(--bg); background:var(--mint); padding:2px 7px; border-radius:6px; height:fit-content; flex:0 0 auto; font-weight:600; margin-top:2px}
+.res .ri.free{background:var(--mint)}
+.res .rb{flex:1; min-width:0}
+.res .rn{font-weight:600; font-size:14px}
+.res .rn a{color:var(--ink); text-decoration:none}
+.res .rn a:hover{color:var(--amber)}
+.res .rd2{font-size:12.5px; color:var(--ink2); margin-top:1px}
+
+/* progress log */
+.log-form{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+@media(max-width:560px){.log-form{grid-template-columns:1fr}}
+.chartbox{padding:6px 2px}
+.legend{display:flex; gap:16px; justify-content:center; margin-top:6px; font-size:12px; color:var(--ink2)}
+.legend span{display:inline-flex; align-items:center; gap:6px}
+.legend i{width:11px; height:3px; border-radius:2px; display:inline-block}
+.empty{text-align:center; color:var(--ink3); font-size:13.5px; padding:24px 10px}
+.log-hist{margin-top:14px}
+.log-hist .lh{display:flex; gap:10px; font-size:12.5px; padding:8px 0; border-bottom:1px solid var(--line); color:var(--ink2)}
+.log-hist .lh .ld{font-family:var(--mono); color:var(--ink3); width:62px; flex:0 0 auto}
+
+/* misc */
+.note{font-size:12.5px; color:var(--ink3); margin-top:10px; line-height:1.5}
+.note b{color:var(--ink2)}
+.toast{position:fixed; bottom:96px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--surface3); border:1px solid var(--line2); color:var(--ink); padding:11px 18px; border-radius:11px; font-size:13.5px; box-shadow:var(--shadow); opacity:0; pointer-events:none; transition:.3s; z-index:60}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+.divider{height:1px; background:var(--line); margin:18px 0}
+.muted{color:var(--ink3)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="logo">
+      <div class="glyph">ə</div>
+      <div class="name">Shadow<span>Lab</span></div>
+    </div>
+    <div class="phase-chip" id="phaseChip">Fase <b>—</b></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ============ HOY ============ -->
+<section class="view active" id="v-hoy">
+  <div class="hero">
+    <div class="greet" id="greet">Hola, Juan.</div>
+    <div class="streak"><span class="num" id="streakNum">0</span><span class="lab" id="streakLab">días de racha · empieza hoy</span></div>
+    <div class="phrase-of-day">
+      <div class="tag">Escrito · vs · como suena de verdad</div>
+      <div class="written" id="podWritten">—</div>
+      <div class="arrow">↓ los nativos lo comprimen así</div>
+      <div class="reduced" id="podReduced">—</div>
+      <button class="btn ghost sm say" id="podSay">▶ Escuchar</button>
+    </div>
+    <svg class="wave" viewBox="0 0 400 48" preserveAspectRatio="none"><path id="wavePath" d="M0,24 Q20,24 40,24 T80,24" stroke="var(--amber)" stroke-width="2" fill="none" opacity=".55"/></svg>
+  </div>
+
+  <div class="card">
+    <h3>Sesión de hoy <span class="muted mono" id="dayKindLab" style="font-size:13px"></span></h3>
+    <p class="sub" id="dayKindDesc">45 minutos · 3 bloques de práctica deliberada</p>
+    <div id="blockList"></div>
+    <button class="btn mint full" id="finishBtn" style="margin-top:6px">✓ Marcar sesión completa</button>
+    <p class="note">El núcleo son 45 min de trabajo <b>incómodo y con feedback</b>. El bloque extensivo (series/podcasts que disfrutes) va aparte, en tiempos muertos — eso es combustible, no esfuerzo.</p>
+  </div>
+
+  <div class="card">
+    <h3>Tu avance global</h3>
+    <p class="sub">Plan de 6–9 meses · referencia ~270 h/año a 45 min/día</p>
+    <div class="plan-progress">
+      <svg class="ring" width="84" height="84" viewBox="0 0 84 84">
+        <circle cx="42" cy="42" r="36" fill="none" stroke="var(--surface3)" stroke-width="8"/>
+        <circle id="ringFill" cx="42" cy="42" r="36" fill="none" stroke="var(--amber)" stroke-width="8" stroke-linecap="round" stroke-dasharray="226" stroke-dashoffset="226" transform="rotate(-90 42 42)"/>
+        <text id="ringTxt" x="42" y="47" text-anchor="middle" font-family="var(--mono)" font-size="17" fill="var(--ink)">0%</text>
+      </svg>
+      <div style="flex:1">
+        <div class="metric-row"><div class="ml">Días practicados</div><div class="bar"><i id="barDays" style="width:0%"></i></div><div class="mv" id="valDays">0</div></div>
+        <div class="metric-row"><div class="ml">Dictado (último)</div><div class="bar"><i id="barDict" style="width:0%"></i></div><div class="mv" id="valDict">—</div></div>
+        <div class="metric-row"><div class="ml">Speaking (último)</div><div class="bar"><i id="barSpk" style="width:0%"></i></div><div class="mv" id="valSpk">—</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLAN ============ -->
+<section class="view" id="v-plan">
+  <div class="eyebrow">Ruta de 6 a 9 meses</div>
+  <h2 class="vtitle">Tu plan por fases</h2>
+  <p class="lede">Primero arreglas el oído (decodificación), luego empujas la voz. Cada fase tiene un umbral medible: no avanzas por calendario, avanzas por desempeño.</p>
+  <div id="roadmap"></div>
+  <div class="card" style="margin-top:8px">
+    <h3>La regla de oro</h3>
+    <p class="sub" style="margin:0">Input intensivo con foco fonético (shadowing + dictado) para arreglar el oído + output forzado con feedback para arreglar el habla. Las series y podcasts son el combustible de fondo, no el motor.</p>
+  </div>
+</section>
+
+<!-- ============ PRÁCTICA ============ -->
+<section class="view" id="v-practica">
+  <div class="eyebrow">Entrenamiento activo</div>
+  <h2 class="vtitle">Práctica con IA</h2>
+  <p class="lede" id="practiceLede">Cargando…</p>
+  <div class="tool-tabs" id="toolTabs">
+    <button data-tool="dict" class="on">Dictado</button>
+    <button data-tool="role">Role-play</button>
+    <button data-tool="shadow">Material shadowing</button>
+    <button data-tool="phon">Drills de sonido</button>
+  </div>
+
+  <!-- DICTADO -->
+  <div class="tool-pane on" id="tp-dict">
+    <div class="card">
+      <h3>Generador de dictado</h3>
+      <p class="sub">Crea frases americanas reales con formas reducidas. Escúchalas, escríbelas, y al revelar verás dónde tu oído se traga las palabras función.</p>
+      <div class="field"><label>Tema</label>
+        <select id="dictTopic">
+          <option value="negocios e ingeniería civil (reuniones de obra, plazos, costos, clientes)">Negocios / ingeniería civil</option>
+          <option value="conversación cotidiana americana (planes, opiniones, día a día)">Conversación cotidiana</option>
+          <option value="mezcla de negocios y conversación casual">Mezcla de ambos</option>
+        </select>
+      </div>
+      <div class="field"><label>Velocidad de lectura</label>
+        <div class="seg" id="dictRate">
+          <button data-r="0.75" class="">0.75× (lento)</button>
+          <button data-r="0.9" class="on">0.9× (real)</button>
+          <button data-r="1" class="">1× (nativo)</button>
+        </div>
+      </div>
+      <button class="btn primary full" id="dictGen">Generar 5 frases</button>
+      <div id="dictOut" style="margin-top:14px"></div>
+    </div>
+  </div>
+
+  <!-- ROLE-PLAY -->
+  <div class="tool-pane" id="tp-role">
+    <div class="card">
+      <h3>Role-play de output forzado</h3>
+      <p class="sub">Habla o escribe. Tu interlocutor te responde en personaje y te exige. Al final pide feedback de claridad, gramática y fluidez.</p>
+      <div class="field"><label>Escenario</label>
+        <select id="roleScene">
+          <option value="Eres un cliente americano escéptico en una reunión de obra. Cuestiona plazos y costos, interrumpe cuando algo no quede claro, pide cifras.">Cliente escéptico (reunión de obra)</option>
+          <option value="Eres el entrevistador para un puesto de Jefe de Operaciones en una concesión vial. Haz preguntas de comportamiento y técnicas.">Entrevista de trabajo (operaciones)</option>
+          <option value="Eres un inversionista en un pitch tipo Shark Tank. Haz preguntas difíciles sobre el modelo de negocio.">Inversionista (pitch de negocio)</option>
+          <option value="Eres un amigo americano poniéndote al día en una cafetería. Conversación casual: fin de semana, planes, opiniones.">Amigo en una cafetería (casual)</option>
+        </select>
+      </div>
+      <button class="btn primary full" id="roleStart">Empezar conversación</button>
+      <div id="roleArea" style="display:none; margin-top:14px">
+        <div class="chat" id="roleChat"></div>
+        <div class="chat-in">
+          <button class="mic" id="roleMic" title="Hablar">🎙</button>
+          <textarea id="roleInput" placeholder="Escribe tu respuesta en inglés… o toca el micrófono y habla"></textarea>
+          <button class="btn primary" id="roleSend" style="height:44px">→</button>
+        </div>
+        <div style="display:flex; gap:8px; margin-top:10px">
+          <button class="btn ghost sm" id="roleFeedback">Pedir feedback</button>
+          <button class="btn ghost sm" id="roleReset">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHADOWING MATERIAL -->
+  <div class="tool-pane" id="tp-shadow">
+    <div class="card">
+      <h3>Convertir una idea en inglés hablado</h3>
+      <p class="sub">Escribe una idea tuya (en español o inglés). La convierto en inglés americano natural con las reducciones marcadas, listo para los 6 pasos del shadowing.</p>
+      <div class="field"><label>Tu idea</label>
+        <textarea id="shadowIdea" placeholder="Ej: explicar a un cliente por qué el cronograma de la obra se retrasó dos semanas por lluvias"></textarea>
+      </div>
+      <button class="btn primary full" id="shadowGen">Generar guion para shadowing</button>
+      <div id="shadowOut" style="margin-top:14px"></div>
+      <div class="card" style="background:var(--surface2); margin-top:14px; padding:14px">
+        <h4 style="font-size:14px; margin-bottom:8px; font-family:var(--display)">Los 6 pasos del shadowing</h4>
+        <ol style="margin:0; padding-left:18px; font-size:13px; color:var(--ink2); line-height:1.7">
+          <li>Escucha el clip una vez sin texto (capta la idea)</li>
+          <li>Parallel reading: escucha leyendo en voz alta, sincronizado</li>
+          <li>Mumbling: murmura siguiendo el audio (×2)</li>
+          <li>Verifica el significado con la transcripción</li>
+          <li>Prosody shadowing: repite en tiempo real SIN texto</li>
+          <li>Grábate con el móvil y compárate con el original</li>
+        </ol>
+        <p class="note" style="margin-top:9px"><b>Ojo:</b> la voz sintética sirve para preparar y entender, pero para shadowing real usa <b>audio humano</b> (Rachel's English, una escena de Suits/The Office) — está en Recursos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHONETICS DRILLS -->
+  <div class="tool-pane" id="tp-phon">
+    <div class="card">
+      <h3>Drills del sonido objetivo</h3>
+      <p class="sub">Genera frases enfocadas en un sonido y qué corregir exactamente. Ideal para los 3–4 min finales del bloque de shadowing.</p>
+      <div class="field"><label>Sonido</label>
+        <select id="phonSound">
+          <option value="schwa /ə/ (reducción de vocales átonas)">Schwa /ə/ — reducción de vocales</option>
+          <option value="flapping de la T americana (water→wadder, better→bedder)">Flapping de la T (water→wadder)</option>
+          <option value="formas reducidas (gonna, wanna, gotta, hafta, whaddaya)">Formas reducidas (gonna, wanna…)</option>
+          <option value="linking / connected speech (turn it off→tur-ni-toff)">Linking (encadenado de palabras)</option>
+          <option value="stress-timing (comprimir palabras función)">Stress-timing (ritmo del inglés)</option>
+        </select>
+      </div>
+      <button class="btn primary full" id="phonGen">Generar 5 frases de práctica</button>
+      <div id="phonOut" style="margin-top:14px"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FONÉTICA ============ -->
+<section class="view" id="v-fonetica">
+  <div class="eyebrow">Referencia rápida</div>
+  <h2 class="vtitle">Fonética americana</h2>
+  <p class="lede">Esto es lo que tu oído nunca entrenó. No es vocabulario nuevo: son palabras que ya conoces, comprimidas. Toca cualquier ejemplo para oírlo.</p>
+
+  <div class="card sound-week">
+    <div class="tag mono" style="font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink2)">Sonido de esta semana</div>
+    <div class="big" id="soundWeekSym">/ə/</div>
+    <p class="sub" id="soundWeekDesc" style="margin:4px 0 0">—</p>
+  </div>
+
+  <div class="card">
+    <h3>Las 5 cosas que te bloquean</h3>
+    <div class="ipa-list" style="margin-top:10px">
+      <div class="ipa-row"><div class="sym">/ə/</div><div class="ex"><b>Schwa.</b> 1 de cada 3 vocales nativas. <b>banana</b> = /bəˈnænə/, no /ba-na-na/. <b>to/for/can</b> → /tə/, /fər/, /kən/.</div></div>
+      <div class="ipa-row"><div class="sym">t→d</div><div class="ex"><b>Flapping.</b> La T entre vocales suena como D suave. <b>water</b>→wadder, <b>better</b>→bedder, <b>what I</b>→wadai.</div></div>
+      <div class="ipa-row"><div class="sym">~</div><div class="ex"><b>Linking.</b> Las palabras se encadenan. <b>turn it off</b>→tur-ni-toff.</div></div>
+      <div class="ipa-row"><div class="sym">∅</div><div class="ex"><b>Elisión.</b> Sonidos que se fusionan o caen. <b>don't you</b>→doncha, <b>what do you</b>→whaddaya.</div></div>
+      <div class="ipa-row"><div class="sym">◔</div><div class="ex"><b>Stress-timing.</b> Solo las palabras de contenido llevan vocal plena; el resto se comprime. No hablan más rápido: recorren menos.</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Formas reducidas que debes reconocer</h3>
+    <p class="sub">Una aparece cada ~2 minutos en habla cotidiana. Tócalas para oírlas.</p>
+    <div class="reduce-grid" id="reduceGrid"></div>
+  </div>
+</section>
+
+<!-- ============ RECURSOS ============ -->
+<section class="view" id="v-recursos">
+  <div class="eyebrow">Todo gratis o con plan gratuito</div>
+  <h2 class="vtitle">Recursos</h2>
+  <p class="lede">Curado para inglés americano y sin pagar. Donde el plan original sugería algo de pago (ELSA, italki, ChatGPT Plus), aquí tienes la alternativa gratuita equivalente.</p>
+  <div id="resList"></div>
+</section>
+
+<!-- ============ PROGRESO ============ -->
+<section class="view" id="v-progreso">
+  <div class="eyebrow">Mide para no engañarte</div>
+  <h2 class="vtitle">Progreso</h2>
+  <p class="lede">La comprensión mejora "despacio y de golpe": semanas sin notar nada y un día entiendes algo antes imposible. Registra para ver la tendencia real.</p>
+
+  <div class="card">
+    <h3>Registrar sesión de hoy</h3>
+    <p class="sub">30 segundos. Solo lo que mediste hoy; deja en blanco lo que no.</p>
+    <div class="log-form">
+      <div class="field"><label>Dictado — % palabras correctas</label><input type="text" id="logDict" inputmode="numeric" placeholder="0–100"></div>
+      <div class="field"><label>Shadowing — ¿seguiste el clip? (1–5)</label><input type="text" id="logShadow" inputmode="numeric" placeholder="1–5"></div>
+      <div class="field"><label>Speaking — fluidez/pronunciación (1–10)</label><input type="text" id="logSpk" inputmode="numeric" placeholder="1–10"></div>
+      <div class="field"><label>Nota subjetiva</label><input type="text" id="logNote" placeholder="Ej: entendí una escena sin subtítulos"></div>
+    </div>
+    <button class="btn primary full" id="logSave">Guardar registro</button>
+  </div>
+
+  <div class="card">
+    <h3>Evolución</h3>
+    <div class="chartbox" id="chartBox"><div class="empty">Aún no hay registros. Guarda tu primer dato para ver la curva.</div></div>
+    <div class="legend"><span><i style="background:var(--amber)"></i>Dictado %</span><span><i style="background:var(--mint)"></i>Speaking ×10</span></div>
+    <div class="log-hist" id="logHist"></div>
+  </div>
+
+  <div class="card">
+    <h3>Tus métricas semanales</h3>
+    <ul style="margin:8px 0 0; padding-left:18px; font-size:13.5px; color:var(--ink2); line-height:1.8">
+      <li><b style="color:var(--ink)">Dictado:</b> sube de ~75% a &gt;90% de palabras en clips nuevos.</li>
+      <li><b style="color:var(--ink)">Shadowing:</b> ¿sigues un clip a velocidad nativa sin perderte? Sube dificultad cuando sea fácil.</li>
+      <li><b style="color:var(--ink)">Speaking:</b> menos "huecos" por conversación; mejor score de la IA.</li>
+      <li><b style="color:var(--ink)">Realidad:</b> ¿entiendes una serie nueva sin subtítulos? ¿una llamada con un cliente americano?</li>
+    </ul>
+    <div class="divider"></div>
+    <button class="btn ghost sm" id="resetBtn">Reiniciar todos mis datos</button>
+  </div>
+</section>
+
+</main>
+
+<nav class="tabs">
+  <div class="row">
+    <button data-view="hoy" class="on"><span class="ic">◉</span>Hoy</button>
+    <button data-view="plan"><span class="ic">⌗</span>Plan</button>
+    <button data-view="practica"><span class="ic">▶</span>Práctica</button>
+    <button data-view="fonetica"><span class="ic">ə</span>Fonética</button>
+    <button data-view="recursos"><span class="ic">❑</span>Recursos</button>
+    <button data-view="progreso"><span class="ic">◔</span>Progreso</button>
+  </div>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   ShadowLab — datos
+   ============================================================ */
+const PHRASES = [
+  {w:"What are you going to do about it?", r:"Whaddaya gonna do aboudit?"},
+  {w:"I have to get back to you on that.", r:"I hafta get back to ya on that."},
+  {w:"Did you want to talk to him?", r:"Didja wanna talk to 'im?"},
+  {w:"Let me give you a ballpark figure.", r:"Lemme give ya a ballpark figure."},
+  {w:"I've got to run it by the team first.", r:"I gotta run it by the team first."},
+  {w:"A lot of the work is already done.", r:"A lodda the work's already done."},
+  {w:"Could you send it over to me?", r:"Couldja send it over to me?"},
+  {w:"It's kind of a big deal for us.", r:"It's kinda big deal for us."},
+  {w:"What do you think we should do?", r:"Whaddaya think we should do?"},
+  {w:"I'm going to need a couple of days.", r:"I'mma need a coupla days."}
+];
+const REDUCED = [
+  {f:"going to", t:"gonna"},{f:"want to", t:"wanna"},{f:"got to", t:"gotta"},
+  {f:"have to", t:"hafta"},{f:"give me", t:"gimme"},{f:"let me", t:"lemme"},
+  {f:"what do you", t:"whaddaya"},{f:"don't you", t:"doncha"},
+  {f:"kind of", t:"kinda"},{f:"a lot of", t:"a lotta"},
+  {f:"out of", t:"outta"},{f:"I am going to", t:"I'mma"}
+];
+const SOUNDS = [
+  {sym:"/ə/", d:"El schwa: la vocal átona neutra. Es el sonido más frecuente del inglés. Comprime todo lo que no lleva acento."},
+  {sym:"t→d", d:"Flapping de la T: entre vocales suena como una D suave. water→wadder, city→ciddy, what I→wadai."},
+  {sym:"gonna", d:"Formas reducidas: gonna, wanna, gotta, hafta. Tu oído debe reconocerlas instantáneamente, no traducirlas."},
+  {sym:"~", d:"Linking: las palabras se encadenan sin pausa. turn it off→tur-ni-toff. an apple→a-napple."},
+  {sym:"◔", d:"Stress-timing: marca las palabras de contenido y comprime el resto. Practica un patrón de golpes rítmicos."},
+  {sym:"↗↘", d:"Entonación: las palabras importantes suben de tono; las reducidas bajan. La melodía carga el significado."}
+];
+const ROADMAP = [
+  {when:"Semana 1", name:"Fase 0 · Diagnóstico", goal:"Saber dónde estás de verdad antes de entrenar. Probablemente B2 en gramática/lectura, pero más bajo en listening/speaking nativo.",
+   focus:[["Medir","am"]], acts:["Test CEFR gratis (EF SET) para tener un número base","Dictado base: un clip de 5 frases, anota tu % de palabras","Shadowing base: ¿puedes seguir un clip a velocidad nativa?","Grábate hablando 3–4 min sobre un proyecto tuyo y reescúchate"],
+   gate:"Registra los 3 baselines en Progreso. Eso es tu punto de partida."},
+  {when:"Meses 1–2", name:"Fase 1 · Arreglar el oído", goal:"Atacar la decodificación: shadowing + dictado + fonética explícita. Aquí está el mayor impacto. 60% oído / 40% voz.",
+   focus:[["Dictado","am"],["Shadowing","am"],["Fonética","am"]], acts:["Días A: dictado (lun/mié/vie). Días B: listening intensivo + narrow listening","Shadowing diario con audio humano americano (6 pasos)","Un sonido objetivo por semana: schwa, flapping, reducciones…","Si el dictado te frustra (<50%), baja el audio a 0.75×"],
+   gate:"Avanza cuando el dictado supere ~85% en clips conocidos."},
+  {when:"Meses 3–4", name:"Fase 2 · Empujar la voz", goal:"Output forzado en serio. Contenido más rápido y no graduado. Sube el peso del speaking. Entra el humano.",
+   focus:[["Speaking","mi"],["Listening real","am"]], acts:["Más tiempo en role-play; pide que te interrumpan y corrijan","Empieza intercambio/tutor gratis 1–2×/semana (Tandem, HelloTalk)","Contenido sin graduar: podcasts y series a velocidad real","Explica conceptos complejos de tu trabajo en voz alta, grábate"],
+   gate:"Avanza cuando las conversaciones con IA se sientan fáciles."},
+  {when:"Meses 5–6", name:"Fase 3 · Inglés profesional", goal:"Especializar en negocios e ingeniería: negociaciones, presentaciones, reuniones de obra, entrevistas.",
+   focus:[["Negocios","mi"],["Tutor humano","mi"]], acts:["Role-plays de cliente escéptico, pitch, entrevista de operaciones","Business English Pod: reuniones, negociaciones, presentaciones","Más peso al tutor/intercambio humano como prueba de realidad","Phrasal verbs e idioms de negocios: circle back, touch base, ballpark"],
+   gate:"Avanza cuando manejes una reunión simulada de negocios sin trabarte."},
+  {when:"Meses 7–9", name:"Fase 4 · Consolidación", goal:"Volverlo automático en contextos reales. Subtítulos a cero. Salto de nivel CEFR completo en listening/speaking.",
+   focus:[["Real","mi"],["Sin subtítulos","am"]], acts:["Series nuevas sin subtítulos; tolera la ambigüedad","Presentaciones grabadas de 5 min sobre proyectos reales","Llamadas/reuniones reales con hablantes americanos si es posible","Si te estancas: cambia de contenido y sube dificultad"],
+   gate:"Meta final: entender una serie nueva sin subtítulos y sostener una llamada con un cliente americano."}
+];
+const RES = [
+  {g:"Fonética y connected speech", icon:"ə", d:"YouTube, 100% gratis. La base para entrenar el oído.", items:[
+    {n:"Rachel's English", u:"https://www.youtube.com/@rachelsenglish", d:"La referencia de fonética americana: schwa, flapping, reducciones."},
+    {n:"Hadar Shemesh — The Accent's Way", u:"https://www.youtube.com/@hadar.shemesh", d:"Por qué no entiendes a nativos y cómo entrenar el oído."},
+    {n:"Speak English with Christina", u:"https://www.youtube.com/@SpeakEnglishWithChristina", d:"Inglés americano real y de negocios."},
+    {n:"RealLife English", u:"https://www.youtube.com/@reallifeenglish1", d:"Connected speech y comprensión de habla rápida."}
+  ]},
+  {g:"Podcasts con transcripción", icon:"▶", d:"Audio gratis; muchos con transcripción. Sirve para extensivo e intensivo.", items:[
+    {n:"All Ears English", u:"https://www.allearsenglish.com/episodes/", d:"Conversacional americano + serie de Business English."},
+    {n:"Business English Pod", u:"https://www.businessenglishpod.com/", d:"Reuniones, negociaciones, presentaciones. Lecciones gratuitas."},
+    {n:"Plain English", u:"https://plainenglish.com/", d:"Más lento, sube velocidad gradualmente. Transcripción gratis."},
+    {n:"Leonardo English — Curious Minds", u:"https://www.leonardoenglish.com/podcasts", d:"Audio gratis, dificultad graduada."}
+  ]},
+  {g:"Series para intensivo y extensivo", icon:"❑", d:"En tu streaming. Subtítulos en inglés; quítalos cuando puedas.", items:[
+    {n:"Negocios: Suits · The Office (US) · Mad Men · Shark Tank", u:"", d:"Jerga de negociación, reuniones, registros profesionales."},
+    {n:"Cotidiano: Friends · Modern Family · How I Met Your Mother", u:"", d:"Conversación casual y variedad de registros."},
+    {n:"Técnica: revuelve algo que ya conoces", u:"", d:"Sabes la trama → te concentras en el idioma, no en seguir la historia."}
+  ]},
+  {g:"Herramientas con feedback (plan gratuito)", icon:"◉", d:"Versiones gratuitas de lo que el plan original sugería pagar.", items:[
+    {n:"ELSA Speak — versión gratuita", u:"https://elsaspeak.com/", d:"Feedback de pronunciación fonema a fonema (límite diario gratis)."},
+    {n:"Claude / ChatGPT — modo voz gratis", u:"https://claude.ai/", d:"Role-play y feedback sin pagar (con límites de uso)."},
+    {n:"YouGlish", u:"https://youglish.com/", d:"Gratis: busca cualquier palabra y oye cómo la dicen decenas de nativos."},
+    {n:"Anki", u:"https://apps.ankiweb.net/", d:"Repetición espaciada, gratis y open source. Para fijar reducciones y vocabulario."}
+  ]},
+  {g:"Conversación humana GRATIS", icon:"◔", d:"Tu prueba de realidad sin pagar tutor: intercambias tu español por su inglés.", items:[
+    {n:"Tandem", u:"https://www.tandem.net/", d:"Intercambio de idiomas con nativos por texto y voz."},
+    {n:"HelloTalk", u:"https://www.hellotalk.com/", d:"Chat y llamadas con nativos; corrigen tus mensajes."},
+    {n:"ConversationExchange", u:"https://www.conversationexchange.com/", d:"Encuentra americanos que aprenden español para intercambiar."},
+    {n:"Speaky", u:"https://www.speaky.com/", d:"Comunidad de intercambio lingüístico gratuita."}
+  ]},
+  {g:"Tests de nivel gratis", icon:"⌗", d:"Para tu diagnóstico de Fase 0 y para medir el salto.", items:[
+    {n:"EF SET", u:"https://www.efset.org/", d:"Test gratuito de listening y reading con score tipo CEFR."},
+    {n:"Cambridge — Test your English", u:"https://www.cambridgeenglish.org/test-your-english/", d:"Tests rápidos gratuitos por nivel."}
+  ]}
+];
+
+/* ============================================================
+   Almacenamiento — funciona en Claude.ai y en GitHub Pages
+   ============================================================ */
+const Store=(()=>{
+  const hasClaude = typeof window!=='undefined' && window.storage && typeof window.storage.get==='function';
+  const mem={};
+  async function get(k){
+    try{ if(hasClaude){const r=await window.storage.get(k); return r?r.value:null;} if(window.localStorage) return window.localStorage.getItem(k);}catch(e){}
+    return (k in mem)?mem[k]:null;
+  }
+  async function set(k,v){
+    try{ if(hasClaude){await window.storage.set(k,v); return;} if(window.localStorage){window.localStorage.setItem(k,v); return;}}catch(e){}
+    mem[k]=v;
+  }
+  return {get,set,hasClaude};
+})();
+
+let S={ start:null, streak:0, last:null, daysDone:0, doneToday:[], doneTodayDate:null, logs:[] };
+const KEY='shadowlab_state_v1';
+async function loadState(){ try{const raw=await Store.get(KEY); if(raw) S=Object.assign(S,JSON.parse(raw));}catch(e){} }
+async function saveState(){ try{await Store.set(KEY,JSON.stringify(S));}catch(e){} }
+
+/* ============================================================
+   Utilidades de fecha / sesión
+   ============================================================ */
+function todayStr(){return new Date().toISOString().slice(0,10);}
+function daysBetween(a,b){return Math.round((new Date(b)-new Date(a))/864e5);}
+function planDay(){ if(!S.start) return 1; return Math.max(1, daysBetween(S.start,todayStr())+1); }
+function planWeek(){ return Math.floor((planDay()-1)/7)+1; }
+function currentPhaseIdx(){ const w=planWeek(); if(w<=1)return 0; if(w<=8)return 1; if(w<=16)return 2; if(w<=24)return 3; return 4; }
+function isDayA(){ const d=new Date().getDay(); return d===1||d===3||d===5; } // L/Mi/V = A
+function isWeekend(){ const d=new Date().getDay(); return d===0||d===6; }
+
+const BLOCKS_A=[
+  {n:"Dictado",meta:"15 min · decodificación",desc:"Toma 4–5 frases de un podcast/serie. Escríbelas, compáralas, marca en rojo los errores: verás patrones (reducciones, flapping).",link:["practica","dict"]},
+  {n:"Shadowing + fonética",meta:"15 min · oído y ritmo",desc:"Clip de 30–45 s de audio humano americano. Los 6 pasos. Cierra con 3–4 min del sonido de la semana.",link:["practica","shadow"]},
+  {n:"Speaking / output forzado",meta:"15 min · voz",desc:"Role-play de negocios o casual; pide que te interrumpan y corrijan. Apunta 1 expresión nueva para reusar mañana.",link:["practica","role"]}
+];
+const BLOCKS_B=[
+  {n:"Listening intensivo + narrow",meta:"15 min · decodificación",desc:"Un clip de 2–3 min del mismo hablante/tema, 2–3 veces, cazando las palabras función reducidas que se te escapan.",link:["recursos",null]},
+  {n:"Shadowing + fonética",meta:"15 min · oído y ritmo",desc:"Clip de 30–45 s de audio humano americano. Los 6 pasos. Cierra con 3–4 min del sonido de la semana.",link:["practica","shadow"]},
+  {n:"Speaking / output forzado",meta:"15 min · voz",desc:"Role-play o, 1×/semana, explica un proyecto de tu consultora 3–4 min grabándote y detecta huecos.",link:["practica","role"]}
+];
+
+/* ============================================================
+   Voz del navegador (Web Speech API) — gratis
+   ============================================================ */
+let usVoice=null;
+function pickVoice(){ const vs=speechSynthesis.getVoices(); usVoice = vs.find(v=>/en-US/i.test(v.lang)&&/female|samantha|zira|aria|jenny/i.test(v.name)) || vs.find(v=>/en-US/i.test(v.lang)) || vs.find(v=>/en/i.test(v.lang)) || null; }
+if('speechSynthesis' in window){ pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; }
+function speak(text,rate){ try{ if(!('speechSynthesis' in window)){toast('Tu navegador no tiene voz integrada');return;} speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=rate||0.92; if(usVoice)u.voice=usVoice; speechSynthesis.speak(u);}catch(e){} }
+
+let recog=null, recogTarget=null;
+function getRecognition(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR) return null;
+  const r=new SR(); r.lang='en-US'; r.interimResults=false; r.maxAlternatives=1; return r;
+}
+function micToggle(btn,inputEl,onDone){
+  if(recog){ recog.stop(); return; }
+  recog=getRecognition();
+  if(!recog){ toast('Tu navegador no soporta reconocimiento de voz (usa Chrome)'); return; }
+  btn.classList.add('rec');
+  recog.onresult=(e)=>{ const t=e.results[0][0].transcript; inputEl.value=(inputEl.value?inputEl.value+' ':'')+t; if(onDone)onDone(t); };
+  recog.onerror=()=>{ toast('No te escuché bien, intenta de nuevo'); };
+  recog.onend=()=>{ btn.classList.remove('rec'); recog=null; };
+  try{recog.start();}catch(e){ btn.classList.remove('rec'); recog=null; }
+}
+
+/* ============================================================
+   Claude API (en Claude.ai) con fallback a prompt copiable
+   ============================================================ */
+async function callClaude(messages, system, maxTokens){
+  const res=await fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST", headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({ model:"claude-sonnet-4-6", max_tokens:maxTokens||1000, system:system||undefined, messages })
+  });
+  if(!res.ok) throw new Error("api "+res.status);
+  const data=await res.json();
+  return data.content.filter(b=>b.type==="text").map(b=>b.text).join("\n").trim();
+}
+function fallbackBox(promptText, hint){
+  const safe=promptText.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return `<div class="fallback"><div class="fh">⚡ IA en vivo no disponible aquí</div>
+    <p class="note" style="margin:0 0 9px">${hint||'Estás fuera de Claude.ai (p.ej. en GitHub Pages). Copia este prompt y pégalo en Claude o ChatGPT gratis — hace exactamente lo mismo.'}</p>
+    <pre>${safe}</pre>
+    <button class="btn ghost sm" onclick="copyText(this)">Copiar prompt</button></div>`;
+}
+function copyText(btn){
+  const pre=btn.parentElement.querySelector('pre');
+  const t=pre.innerText;
+  try{ navigator.clipboard.writeText(t).then(()=>{btn.textContent='¡Copiado!'; setTimeout(()=>btn.textContent='Copiar prompt',1500);}); }
+  catch(e){ const r=document.createRange(); r.selectNode(pre); getSelection().removeAllRanges(); getSelection().addRange(r); toast('Selecciona y copia (Ctrl/Cmd+C)'); }
+}
+function stripJSON(s){ return s.replace(/```json/gi,'').replace(/```/g,'').trim(); }
+/* ============================================================
+   Helpers UI
+   ============================================================ */
+const $=(s,el)=>(el||document).querySelector(s);
+const $$=(s,el)=>Array.from((el||document).querySelectorAll(s));
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2200); }
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ============================================================
+   Navegación
+   ============================================================ */
+function go(view){
+  $$('section.view').forEach(s=>s.classList.toggle('active', s.id==='v-'+view));
+  $$('nav.tabs button').forEach(b=>b.classList.toggle('on', b.dataset.view===view));
+  window.scrollTo({top:0,behavior:'instant'});
+}
+$$('nav.tabs button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
+function goTool(tool){ go('practica'); setTool(tool); }
+
+/* ============================================================
+   Render: HOY
+   ============================================================ */
+function renderToday(){
+  // phrase of the day (rota por día del plan)
+  const p=PHRASES[(planDay()-1)%PHRASES.length];
+  $('#podWritten').textContent=p.w; $('#podReduced').textContent=p.r;
+  $('#podSay').onclick=()=>speak(p.w,0.95);
+
+  // streak
+  $('#streakNum').textContent=S.streak;
+  $('#streakLab').textContent = S.streak===0 ? 'días de racha · empieza hoy' : (S.streak===1?'día de racha · ¡sigue!':'días seguidos · no rompas la cadena');
+  const h=new Date().getHours();
+  $('#greet').textContent = (h<12?'Buenos días':h<19?'Buenas tardes':'Buenas noches')+', Juan. · Día '+planDay()+' del plan';
+
+  // phase chip
+  const ph=ROADMAP[currentPhaseIdx()];
+  $('#phaseChip').innerHTML='Fase <b>'+currentPhaseIdx()+'</b> · '+ph.name.split('·')[1].trim();
+
+  // session blocks
+  if(S.doneTodayDate!==todayStr()){ S.doneToday=[]; S.doneTodayDate=todayStr(); }
+  const kind = isWeekend()?'Fin de semana':(isDayA()?'Día A':'Día B');
+  $('#dayKindLab').textContent='· '+kind;
+  $('#dayKindDesc').textContent = isWeekend()
+    ? 'Hoy ligero: extensivo (series/podcasts) + 1 sesión de intercambio o tutor gratis en vez de un bloque.'
+    : '45 minutos · 3 bloques de práctica deliberada';
+  const blocks = isDayA()?BLOCKS_A:BLOCKS_B;
+  const wrap=$('#blockList'); wrap.innerHTML='';
+  blocks.forEach((b,i)=>{
+    const done=S.doneToday.includes(i);
+    const el=document.createElement('div'); el.className='block'+(done?' done':'');
+    el.innerHTML=`<div class="b-num">${i+1}</div>
+      <div class="b-body">
+        <div class="b-name">${b.n}</div>
+        <div class="b-meta">${b.meta}</div>
+        <div class="b-desc">${b.desc}</div>
+        <div class="b-foot">
+          <button class="btn ghost sm" data-act="timer">▶ Timer 15:00</button>
+          ${b.link?`<button class="btn ghost sm" data-act="tool">Abrir herramienta</button>`:''}
+          <button class="btn ${done?'ghost':'mint'} sm" data-act="done">${done?'✓ Hecho':'Marcar hecho'}</button>
+        </div>
+      </div>`;
+    $('[data-act=timer]',el).onclick=()=>openTimer(b.n,15);
+    const tb=$('[data-act=tool]',el); if(tb) tb.onclick=()=>{ b.link[0]==='practica'?goTool(b.link[1]):go(b.link[0]); };
+    $('[data-act=done]',el).onclick=()=>{ if(!S.doneToday.includes(i)){S.doneToday.push(i);saveState();renderToday();} };
+    wrap.appendChild(el);
+  });
+
+  // global progress
+  const totalDays=270;
+  const pct=Math.min(100,Math.round(S.daysDone/totalDays*100));
+  const off=226-(226*pct/100);
+  $('#ringFill').setAttribute('stroke-dashoffset',off);
+  $('#ringTxt').textContent=pct+'%';
+  $('#valDays').textContent=S.daysDone;
+  $('#barDays').style.width=Math.min(100,S.daysDone/totalDays*100)+'%';
+  const lastDict=[...S.logs].reverse().find(l=>l.dict!=null);
+  const lastSpk=[...S.logs].reverse().find(l=>l.spk!=null);
+  $('#valDict').textContent=lastDict?lastDict.dict+'%':'—';
+  $('#barDict').style.width=(lastDict?lastDict.dict:0)+'%';
+  $('#valSpk').textContent=lastSpk?lastSpk.spk+'/10':'—';
+  $('#barSpk').style.width=(lastSpk?lastSpk.spk*10:0)+'%';
+}
+
+$('#finishBtn').onclick=async()=>{
+  const t=todayStr();
+  if(S.last===t){ toast('Ya marcaste la sesión de hoy ✓'); return; }
+  if(!S.start) S.start=t;
+  // racha
+  if(S.last){ const gap=daysBetween(S.last,t); S.streak = gap===1 ? S.streak+1 : 1; }
+  else S.streak=1;
+  S.last=t; S.daysDone++;
+  await saveState(); renderToday();
+  toast('¡Sesión completa! Racha: '+S.streak+(S.streak===1?' día':' días'));
+  go('progreso'); // invita a registrar métricas
+  $('#logDict').focus();
+};
+
+/* ============================================================
+   Render: PLAN
+   ============================================================ */
+function renderPlan(){
+  const cur=currentPhaseIdx();
+  const wrap=$('#roadmap'); wrap.innerHTML='';
+  ROADMAP.forEach((ph,i)=>{
+    const cls = i<cur?'done':(i===cur?'cur':'');
+    const el=document.createElement('div'); el.className='phase '+cls+(i===cur?' open':'');
+    el.innerHTML=`<div class="dot"></div>
+      <div class="ph-head"><span class="ph-when">${ph.when}</span><span class="ph-name">${ph.name}</span></div>
+      <div class="ph-body">
+        <p class="goal">${ph.goal}</p>
+        <div class="focus">${ph.focus.map(f=>`<span class="chip ${f[1]}">${f[0]}</span>`).join('')}</div>
+        <ul>${ph.acts.map(a=>`<li>${a}</li>`).join('')}</ul>
+        <div class="gate"><b>Umbral para avanzar</b>${ph.gate}</div>
+      </div>`;
+    $('.ph-head',el).onclick=()=>el.classList.toggle('open');
+    wrap.appendChild(el);
+  });
+}
+
+/* ============================================================
+   Render: FONÉTICA
+   ============================================================ */
+function renderPhonetics(){
+  const s=SOUNDS[(planWeek()-1)%SOUNDS.length];
+  $('#soundWeekSym').textContent=s.sym; $('#soundWeekDesc').textContent=s.d;
+  const g=$('#reduceGrid'); g.innerHTML='';
+  REDUCED.forEach(r=>{
+    const el=document.createElement('div'); el.className='rd';
+    el.innerHTML=`<span class="from">${r.f}</span><span class="ar">→</span><span class="to">${r.t}</span><button title="Escuchar">▶</button>`;
+    $('button',el).onclick=()=>speak(r.t.replace(/'/g,''),0.9);
+    g.appendChild(el);
+  });
+}
+
+/* ============================================================
+   Render: RECURSOS
+   ============================================================ */
+function renderResources(){
+  const wrap=$('#resList'); wrap.innerHTML='';
+  RES.forEach(grp=>{
+    const c=document.createElement('div'); c.className='card res-group';
+    c.innerHTML=`<h3><span class="mono" style="color:var(--amber)">${grp.icon}</span> ${grp.g}</h3><p class="gd">${grp.d}</p>`+
+      grp.items.map(it=>`<div class="res"><span class="ri free">GRATIS</span><div class="rb">
+        <div class="rn">${it.u?`<a href="${it.u}" target="_blank" rel="noopener">${it.n} ↗</a>`:it.n}</div>
+        <div class="rd2">${it.d}</div></div></div>`).join('');
+    wrap.appendChild(c);
+  });
+}
+
+/* ============================================================
+   Render: PROGRESO
+   ============================================================ */
+function renderProgress(){
+  const box=$('#chartBox'); const pts=S.logs.filter(l=>l.dict!=null||l.spk!=null);
+  if(pts.length===0){ box.innerHTML='<div class="empty">Aún no hay registros. Guarda tu primer dato para ver la curva.</div>'; }
+  else { box.innerHTML=sparkline(pts); }
+  const h=$('#logHist'); const recent=[...S.logs].reverse().slice(0,8);
+  h.innerHTML=recent.map(l=>`<div class="lh"><span class="ld">${l.d.slice(5)}</span><span>${l.dict!=null?'Dictado '+l.dict+'% · ':''}${l.spk!=null?'Speak '+l.spk+'/10 · ':''}${l.shadow!=null?'Shadow '+l.shadow+'/5':''}${l.note?' · '+esc(l.note):''}</span></div>`).join('');
+}
+function sparkline(pts){
+  const W=300,H=120,pad=8;
+  const xs=(i)=> pad + (pts.length===1?W/2:(i*(W-2*pad)/(pts.length-1)));
+  const yD=(v)=> H-pad-(v/100*(H-2*pad));
+  const yS=(v)=> H-pad-(v/10*(H-2*pad));
+  function path(getY,field){ const p=pts.filter(x=>x[field]!=null); if(p.length===0)return ''; let d=''; pts.forEach((x,i)=>{ if(x[field]==null)return; const X=xs(i),Y=getY(x[field]); d+=(d?'L':'M')+X.toFixed(1)+' '+Y.toFixed(1)+' '; }); return d; }
+  const dD=path(yD,'dict'), dS=path(yS,'spk');
+  function dots(getY,field,col){ return pts.map((x,i)=> x[field]!=null?`<circle cx="${xs(i).toFixed(1)}" cy="${getY(x[field]).toFixed(1)}" r="3" fill="${col}"/>`:'').join(''); }
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block">
+    <line x1="${pad}" y1="${H-pad}" x2="${W-pad}" y2="${H-pad}" stroke="var(--line)"/>
+    ${dD?`<path d="${dD}" fill="none" stroke="var(--amber)" stroke-width="2.5"/>`:''}
+    ${dS?`<path d="${dS}" fill="none" stroke="var(--mint)" stroke-width="2.5"/>`:''}
+    ${dots(yD,'dict','var(--amber)')}${dots(yS,'spk','var(--mint)')}
+  </svg>`;
+}
+$('#logSave').onclick=async()=>{
+  const d=$('#logDict').value.trim(), sh=$('#logShadow').value.trim(), sp=$('#logSpk').value.trim(), nt=$('#logNote').value.trim();
+  const num=(v,max)=>{ if(v==='')return null; const n=parseInt(v,10); return isNaN(n)?null:Math.max(0,Math.min(max,n)); };
+  const entry={d:todayStr(), dict:num(d,100), shadow:num(sh,5), spk:num(sp,10), note:nt||null};
+  if(entry.dict==null&&entry.shadow==null&&entry.spk==null&&!entry.note){ toast('Escribe al menos un valor'); return; }
+  S.logs.push(entry); await saveState();
+  $('#logDict').value='';$('#logShadow').value='';$('#logSpk').value='';$('#logNote').value='';
+  renderProgress(); renderToday(); toast('Registro guardado ✓');
+};
+$('#resetBtn').onclick=async()=>{
+  if(!confirm('¿Borrar toda tu racha, progreso y registros? No se puede deshacer.'))return;
+  S={start:null,streak:0,last:null,daysDone:0,doneToday:[],doneTodayDate:null,logs:[]};
+  await saveState(); renderToday();renderPlan();renderPhonetics();renderProgress(); toast('Datos reiniciados');
+};
+
+/* ============================================================
+   Timer
+   ============================================================ */
+let tInt=null;
+function openTimer(label,mins){
+  go('hoy');
+  let modal=$('#timerModal');
+  if(!modal){
+    modal=document.createElement('div'); modal.id='timerModal';
+    modal.style.cssText='position:fixed;inset:0;z-index:70;background:rgba(8,14,20,.82);backdrop-filter:blur(4px);display:grid;place-items:center;padding:20px';
+    modal.innerHTML=`<div class="card pad-lg" style="max-width:340px;width:100%;text-align:center;margin:0">
+      <div class="timer-label" id="tmLabel">Bloque</div>
+      <div class="timer-wrap"><div class="timer-clock" id="tmClock">15:00</div></div>
+      <div class="timer-ctrls">
+        <button class="btn primary" id="tmStart">▶ Iniciar</button>
+        <button class="btn ghost" id="tmClose">Cerrar</button>
+      </div></div>`;
+    document.body.appendChild(modal);
+    $('#tmClose').onclick=()=>{ clearInterval(tInt); tInt=null; modal.style.display='none'; };
+  }
+  modal.style.display='grid';
+  let total=mins*60, left=total, running=false;
+  const clock=$('#tmClock'), startBtn=$('#tmStart');
+  $('#tmLabel').textContent=label;
+  function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
+  clock.textContent=fmt(left); clock.classList.remove('run');
+  startBtn.textContent='▶ Iniciar';
+  clearInterval(tInt); tInt=null;
+  startBtn.onclick=()=>{
+    if(running){ clearInterval(tInt); running=false; clock.classList.remove('run'); startBtn.textContent='▶ Reanudar'; return; }
+    running=true; clock.classList.add('run'); startBtn.textContent='⏸ Pausar';
+    tInt=setInterval(()=>{ left--; clock.textContent=fmt(left); if(left<=0){ clearInterval(tInt);tInt=null;running=false; clock.classList.remove('run'); try{speak('Time. Nice work.',0.95);}catch(e){} toast('¡Bloque terminado!'); startBtn.textContent='▶ Iniciar'; left=total; setTimeout(()=>clock.textContent=fmt(left),1200); } },1000);
+  };
+}
+
+/* ============================================================
+   Práctica: tool tabs
+   ============================================================ */
+function setTool(tool){
+  $$('#toolTabs button').forEach(b=>b.classList.toggle('on',b.dataset.tool===tool));
+  $$('.tool-pane').forEach(p=>p.classList.toggle('on',p.id==='tp-'+tool));
+}
+$$('#toolTabs button').forEach(b=>b.addEventListener('click',()=>setTool(b.dataset.tool)));
+
+let dictRate=0.9;
+$$('#dictRate button').forEach(b=>b.addEventListener('click',()=>{ $$('#dictRate button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); dictRate=parseFloat(b.dataset.r); }));
+
+/* ---- DICTADO ---- */
+$('#dictGen').onclick=async()=>{
+  const topic=$('#dictTopic').value; const btn=$('#dictGen'); const out=$('#dictOut');
+  const sys="You are an American English pronunciation coach. Output ONLY valid JSON, no markdown, no preamble.";
+  const prompt=`Generate 5 natural American English sentences about: ${topic}. Each must contain real connected-speech reductions (gonna, wanna, flapping T, schwa, linking). For each, give: "text" (correctly spelled sentence), "reduced" (how it actually sounds, e.g. "whaddaya gonna do"), and "focus" (the 2-3 reduced words to watch, comma separated). Return ONLY a JSON array of 5 objects with keys text, reduced, focus.`;
+  btn.disabled=true; btn.innerHTML='<span class="sp"></span> Generando…';
+  try{
+    const raw=await callClaude([{role:'user',content:prompt}],sys,1100);
+    const arr=JSON.parse(stripJSON(raw));
+    renderDictItems(arr,out);
+  }catch(e){
+    out.innerHTML=fallbackBox(prompt+"\n\n(Pídelo y luego escribe cada frase de oído antes de mirar la respuesta.)");
+  }finally{ btn.disabled=false; btn.textContent='Generar 5 frases'; }
+};
+function renderDictItems(arr,out){
+  out.innerHTML='';
+  arr.forEach((it,i)=>{
+    const el=document.createElement('div'); el.className='dict-item';
+    el.innerHTML=`<div class="dtop"><span class="didx mono">Frase ${i+1}/${arr.length}</span>
+      <button class="btn ghost sm" data-act="play">▶ Escuchar</button>
+      <button class="btn ghost sm" data-act="slow">🐢 Lento</button></div>
+      <textarea placeholder="Escribe lo que oíste…"></textarea>
+      <button class="btn mint sm" data-act="reveal">Revelar</button>
+      <div class="dict-reveal">
+        <div class="lbl">Correcto</div><div class="corr">${esc(it.text)}</div>
+        <div class="lbl">Como sonó</div><div class="red">${esc(it.reduced||'')}</div>
+        <div class="lbl">Fíjate en</div><div class="red" style="color:var(--coral)">${esc(it.focus||'')}</div>
+      </div>`;
+    $('[data-act=play]',el).onclick=()=>speak(it.text,dictRate);
+    $('[data-act=slow]',el).onclick=()=>speak(it.text,0.7);
+    $('[data-act=reveal]',el).onclick=()=>el.classList.add('shown');
+    out.appendChild(el);
+  });
+  toast('5 frases listas — escúchalas y escríbelas antes de revelar');
+}
+
+/* ---- ROLE-PLAY ---- */
+let roleHistory=[], roleSys='';
+$('#roleStart').onclick=async()=>{
+  const scene=$('#roleScene').value;
+  roleSys=`You are role-playing to help an intermediate-advanced Spanish speaker (Juan, a civil engineer) practice spoken American English. ${scene} Speak natural, conversational American English with connected speech. Keep replies to 1-3 sentences. Stay in character, push him, ask follow-ups. Never break character unless asked for feedback.`;
+  roleHistory=[];
+  $('#roleArea').style.display='block';
+  $('#roleChat').innerHTML='';
+  addMsg('them','Hi Juan — go ahead, start whenever you\'re ready.');
+  speak("Hi Juan, go ahead, start whenever you're ready.",0.95);
+};
+function addMsg(who,text){
+  const c=$('#roleChat'); const el=document.createElement('div'); el.className='msg '+who;
+  el.innerHTML=esc(text)+(who==='them'?` <button class="replay" title="Repetir">▶</button>`:'');
+  if(who==='them'){ const b=$('.replay',el); b.onclick=()=>speak(text,0.95); }
+  c.appendChild(el); c.scrollTop=c.scrollHeight;
+}
+async function roleSendMsg(){
+  const inp=$('#roleInput'); const text=inp.value.trim(); if(!text)return;
+  addMsg('me',text); inp.value=''; roleHistory.push({role:'user',content:text});
+  const send=$('#roleSend'); send.disabled=true; send.innerHTML='<span class="sp"></span>';
+  try{
+    const reply=await callClaude(roleHistory,roleSys,400);
+    roleHistory.push({role:'assistant',content:reply});
+    addMsg('them',reply); speak(reply,0.95);
+  }catch(e){
+    const c=$('#roleChat'); const d=document.createElement('div');
+    d.innerHTML=fallbackBox(`Eres este personaje para practicar inglés hablado conmigo: ${roleSys}\n\nMi último mensaje: "${text}"\n\nRespóndeme en inglés, en personaje, 1-3 frases.`,'IA en vivo no disponible aquí. Copia esto en Claude/ChatGPT con modo voz gratis para conversar de verdad.');
+    c.appendChild(d); c.scrollTop=c.scrollHeight;
+  }finally{ send.disabled=false; send.textContent='→'; }
+}
+$('#roleSend').onclick=roleSendMsg;
+$('#roleInput').addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();roleSendMsg();} });
+$('#roleMic').onclick=()=>micToggle($('#roleMic'),$('#roleInput'));
+$('#roleReset').onclick=()=>{ roleHistory=[]; $('#roleChat').innerHTML=''; $('#roleStart').click(); };
+$('#roleFeedback').onclick=async()=>{
+  if(roleHistory.length===0){ toast('Habla un poco primero'); return; }
+  const btn=$('#roleFeedback'); btn.disabled=true; btn.innerHTML='<span class="sp"></span> Analizando…';
+  const conv=roleHistory.map(m=>(m.role==='user'?'Juan: ':'Tú: ')+m.content).join('\n');
+  const fbPrompt=`Esta es una conversación de práctica. Evalúa SOLO los mensajes de Juan. Dame en español: 1) claridad, gramática y fluidez del 1 al 10 cada una; 2) sus 3 errores más importantes con la corrección; 3) una expresión americana natural que pudo usar. Sé breve y directo.\n\n${conv}`;
+  try{
+    const fb=await callClaude([{role:'user',content:fbPrompt}],'Eres un coach de inglés directo y útil.',700);
+    const c=$('#roleChat'); const d=document.createElement('div'); d.className='msg them'; d.style.maxWidth='100%';
+    d.style.background='var(--surface3)'; d.innerHTML='<b style="color:var(--mint)">📋 Feedback</b><br>'+esc(fb).replace(/\n/g,'<br>');
+    c.appendChild(d); c.scrollTop=c.scrollHeight;
+  }catch(e){
+    const c=$('#roleChat'); const d=document.createElement('div'); d.appendChild(document.createRange().createContextualFragment(fallbackBox(fbPrompt)));
+    c.appendChild(d); c.scrollTop=c.scrollHeight;
+  }finally{ btn.disabled=false; btn.textContent='Pedir feedback'; }
+};
+
+/* ---- SHADOWING MATERIAL ---- */
+$('#shadowGen').onclick=async()=>{
+  const idea=$('#shadowIdea').value.trim(); if(!idea){ toast('Escribe una idea primero'); return; }
+  const btn=$('#shadowGen'); const out=$('#shadowOut');
+  const prompt=`Convert this idea into 3-4 sentences of natural spoken American English that ${/[a-z]/i.test(idea)?'':''}an engineer would actually say. Idea: "${idea}". Then show the reduced/connected-speech version. Format with two labeled blocks: "SPOKEN:" then the natural text, and "SOUNDS LIKE:" then the reduced version with reductions marked (gonna, wanna, flapping). Keep it concise.`;
+  btn.disabled=true; btn.innerHTML='<span class="sp"></span> Generando…';
+  try{
+    const raw=await callClaude([{role:'user',content:prompt}],'You are an American English coach.',700);
+    out.innerHTML=`<div class="card" style="background:var(--surface2);padding:14px"><div style="white-space:pre-wrap;font-size:14px;line-height:1.6">${esc(raw)}</div>
+      <button class="btn primary sm" style="margin-top:12px" onclick="speakShadow(this)">▶ Escuchar (preparación)</button></div>`;
+    out._text=raw;
+  }catch(e){ out.innerHTML=fallbackBox(prompt); }
+  finally{ btn.disabled=false; btn.textContent='Generar guion para shadowing'; }
+};
+function speakShadow(btn){ const t=$('#shadowOut')._text||''; const spoken=(t.split(/SOUNDS LIKE/i)[0]||t).replace(/SPOKEN:?/i,'').trim(); speak(spoken,0.92); }
+
+/* ---- PHONICS DRILLS ---- */
+$('#phonGen').onclick=async()=>{
+  const sound=$('#phonSound').value; const btn=$('#phonGen'); const out=$('#phonOut');
+  const sys="You are an American English pronunciation coach. Output ONLY valid JSON array, no markdown.";
+  const prompt=`Give 5 short American English sentences that heavily feature: ${sound}. For each return keys: "text" (the sentence) and "tip" (in Spanish, exactly what to do with the mouth/sound). Return ONLY a JSON array of 5 objects.`;
+  btn.disabled=true; btn.innerHTML='<span class="sp"></span> Generando…';
+  try{
+    const raw=await callClaude([{role:'user',content:prompt}],sys,900);
+    const arr=JSON.parse(stripJSON(raw)); out.innerHTML='';
+    arr.forEach((it,i)=>{ const el=document.createElement('div'); el.className='dict-item';
+      el.innerHTML=`<div class="dtop"><span class="didx mono">${i+1}</span><button class="btn ghost sm" data-act="play">▶ Escuchar</button><button class="btn ghost sm" data-act="slow">🐢</button></div>
+        <div style="font-size:15px;color:var(--ink)">${esc(it.text)}</div>
+        <div class="note" style="margin-top:6px">💡 ${esc(it.tip||'')}</div>`;
+      $('[data-act=play]',el).onclick=()=>speak(it.text,0.9);
+      $('[data-act=slow]',el).onclick=()=>speak(it.text,0.65);
+      out.appendChild(el); });
+  }catch(e){ out.innerHTML=fallbackBox(prompt); }
+  finally{ btn.disabled=false; btn.textContent='Generar 5 frases de práctica'; }
+};
+
+/* ============================================================
+   Init
+   ============================================================ */
+async function init(){
+  await loadState();
+  $('#practiceLede').textContent = Store.hasClaude
+    ? 'IA en vivo activa: genera dictados, conversa por voz y recibe feedback al instante.'
+    : 'Modo offline: cada herramienta te da un prompt listo para pegar en Claude o ChatGPT gratis. (Dentro de Claude.ai todo corre en vivo.)';
+  renderToday(); renderPlan(); renderPhonetics(); renderResources(); renderProgress();
+}
+init();
+</script>
+</body>
+</html>
