@@ -27,8 +27,9 @@ html,body{margin:0;padding:0}
 body{
   background:var(--bg); color:var(--ink); font-family:var(--body);
   font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
-  padding-bottom:84px;
+  padding-bottom:84px; transition:padding-bottom .2s;
 }
+body.has-timer{ padding-bottom:148px; }
 h1,h2,h3,h4{font-family:var(--display); font-weight:600; line-height:1.15; margin:0}
 .mono{font-family:var(--mono)}
 button{font-family:inherit; cursor:pointer; border:none; background:none; color:inherit}
@@ -906,38 +907,85 @@ $('#resetBtn').onclick=async()=>{
 };
 
 /* ============================================================
-   Timer
+   Timer — barra flotente persistente (no bloquea, no se detiene
+   al navegar; basado en timestamp real para no desincronizarse)
    ============================================================ */
-let tInt=null;
+let timerState=null; // {label, totalMs, endAt, running, pausedLeftMs}
+let timerTick=null;
+
+function ensureTimerBar(){
+  let bar=$('#timerBar');
+  if(bar) return bar;
+  bar=document.createElement('div'); bar.id='timerBar';
+  bar.style.cssText='position:fixed;left:0;right:0;bottom:64px;z-index:55;display:none;justify-content:center;padding:0 10px;pointer-events:none;';
+  bar.innerHTML=`<div style="pointer-events:auto;max-width:780px;width:100%;background:var(--surface3);border:1px solid var(--line2);box-shadow:var(--shadow);border-radius:13px;padding:10px 12px;display:flex;align-items:center;gap:10px">
+      <button id="tbToggle" class="btn primary sm" style="flex:0 0 auto"></button>
+      <div style="flex:1;min-width:0">
+        <div id="tbLabel" style="font-size:12.5px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
+        <div id="tbClock" class="mono" style="font-size:19px;font-weight:600;color:var(--ink)">15:00</div>
+      </div>
+      <button id="tbReset" class="btn ghost sm" title="Reiniciar">↺</button>
+      <button id="tbClose" class="btn ghost sm" title="Cerrar">✕</button>
+    </div>`;
+  document.body.appendChild(bar);
+  $('#tbToggle',bar).onclick=()=>toggleTimer();
+  $('#tbReset',bar).onclick=()=>resetTimer();
+  $('#tbClose',bar).onclick=()=>closeTimer();
+  return bar;
+}
+function fmtClock(ms){ const s=Math.max(0,Math.ceil(ms/1000)); return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
 function openTimer(label,mins){
-  go('hoy');
-  let modal=$('#timerModal');
-  if(!modal){
-    modal=document.createElement('div'); modal.id='timerModal';
-    modal.style.cssText='position:fixed;inset:0;z-index:70;background:rgba(8,14,20,.82);backdrop-filter:blur(4px);display:grid;place-items:center;padding:20px';
-    modal.innerHTML=`<div class="card pad-lg" style="max-width:340px;width:100%;text-align:center;margin:0">
-      <div class="timer-label" id="tmLabel">Bloque</div>
-      <div class="timer-wrap"><div class="timer-clock" id="tmClock">15:00</div></div>
-      <div class="timer-ctrls">
-        <button class="btn primary" id="tmStart">▶ Iniciar</button>
-        <button class="btn ghost" id="tmClose">Cerrar</button>
-      </div></div>`;
-    document.body.appendChild(modal);
-    $('#tmClose').onclick=()=>{ clearInterval(tInt); tInt=null; modal.style.display='none'; };
+  const bar=ensureTimerBar();
+  timerState={ label, totalMs:mins*60*1000, endAt:null, running:false, pausedLeftMs:mins*60*1000 };
+  bar.style.display='flex';
+  document.body.classList.add('has-timer');
+  $('#tbLabel').textContent=label;
+  renderTimerBar();
+  toast('Timer listo — toca ▶ para iniciar. Puedes seguir navegando.');
+}
+function renderTimerBar(){
+  if(!timerState) return;
+  const clock=$('#tbClock'), toggle=$('#tbToggle');
+  const left = timerState.running ? (timerState.endAt - Date.now()) : timerState.pausedLeftMs;
+  clock.textContent=fmtClock(left);
+  clock.style.color = timerState.running ? 'var(--amber)' : 'var(--ink)';
+  toggle.textContent = timerState.running ? '⏸' : '▶';
+}
+function toggleTimer(){
+  if(!timerState) return;
+  if(timerState.running){
+    timerState.pausedLeftMs = Math.max(0, timerState.endAt - Date.now());
+    timerState.running=false; clearInterval(timerTick); timerTick=null;
+  } else {
+    if(timerState.pausedLeftMs<=0) timerState.pausedLeftMs=timerState.totalMs;
+    timerState.endAt = Date.now()+timerState.pausedLeftMs;
+    timerState.running=true;
+    timerTick=setInterval(()=>{
+      const left=timerState.endAt-Date.now();
+      if(left<=0){
+        clearInterval(timerTick); timerTick=null; timerState.running=false; timerState.pausedLeftMs=0;
+        renderTimerBar();
+        try{speak('Time. Nice work.',0.95);}catch(e){}
+        toast('¡Bloque de "'+timerState.label+'" terminado!');
+        setTimeout(()=>{ if(timerState){ timerState.pausedLeftMs=timerState.totalMs; renderTimerBar(); } },1500);
+        return;
+      }
+      renderTimerBar();
+    },1000);
   }
-  modal.style.display='grid';
-  let total=mins*60, left=total, running=false;
-  const clock=$('#tmClock'), startBtn=$('#tmStart');
-  $('#tmLabel').textContent=label;
-  function fmt(s){ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }
-  clock.textContent=fmt(left); clock.classList.remove('run');
-  startBtn.textContent='▶ Iniciar';
-  clearInterval(tInt); tInt=null;
-  startBtn.onclick=()=>{
-    if(running){ clearInterval(tInt); running=false; clock.classList.remove('run'); startBtn.textContent='▶ Reanudar'; return; }
-    running=true; clock.classList.add('run'); startBtn.textContent='⏸ Pausar';
-    tInt=setInterval(()=>{ left--; clock.textContent=fmt(left); if(left<=0){ clearInterval(tInt);tInt=null;running=false; clock.classList.remove('run'); try{speak('Time. Nice work.',0.95);}catch(e){} toast('¡Bloque terminado!'); startBtn.textContent='▶ Iniciar'; left=total; setTimeout(()=>clock.textContent=fmt(left),1200); } },1000);
-  };
+  renderTimerBar();
+}
+function resetTimer(){
+  if(!timerState) return;
+  clearInterval(timerTick); timerTick=null;
+  timerState.running=false; timerState.pausedLeftMs=timerState.totalMs;
+  renderTimerBar();
+}
+function closeTimer(){
+  clearInterval(timerTick); timerTick=null;
+  timerState=null;
+  const bar=$('#timerBar'); if(bar) bar.style.display='none';
+  document.body.classList.remove('has-timer');
 }
 
 /* ============================================================
